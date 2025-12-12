@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CC Heaven</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0a;
+            min-height: 100vh;
+            color: #fff;
+        }
+        
+        /* Navigation */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 60px;
+            border-bottom: 1px solid #1a1a1a;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: #e31b23;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.2em;
+        }
+        .logo-text {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: #e31b23;
+        }
+        .nav-links {
+            display: flex;
+            gap: 40px;
+        }
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95em;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover {
+            color: #e31b23;
+        }
+        .nav-right {
+            display: flex;
+            gap: 12px;
+        }
+        .nav-btn {
+            padding: 10px 16px;
+            border: 1px solid #333;
+            border-radius: 8px;
+            background: transparent;
+            color: #fff;
+            cursor: pointer;
+            font-size: 0.9em;
+        }
+        .nav-btn.red {
+            background: #e31b23;
+            border-color: #e31b23;
+        }
+        
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 80px 20px 60px;
+            background: radial-gradient(ellipse at center top, rgba(227, 27, 35, 0.15) 0%, transparent 50%);
+        }
+        .badge {
+            display: inline-block;
+            padding: 10px 24px;
+            border: 1px solid rgba(227, 27, 35, 0.5);
+            border-radius: 50px;
+            color: #e31b23;
+            font-size: 0.9em;
+            margin-bottom: 30px;
+        }
+        .hero h1 {
+            font-size: 3.5em;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+        .hero h1 span {
+            color: #e31b23;
+        }
+        .hero p {
+            color: #888;
+            font-size: 1.1em;
+            margin-bottom: 40px;
+        }
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+        }
+        .btn-primary {
+            padding: 14px 32px;
+            background: #e31b23;
+            border: none;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-primary:hover {
+            background: #c41820;
+        }
+        .btn-secondary {
+            padding: 14px 32px;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-secondary:hover {
+            background: #252525;
+        }
+        
+        /* Products Section */
+        .products {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px 60px;
+        }
+        .section-title {
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 24px;
+            padding-left: 12px;
+            border-left: 3px solid #e31b23;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+        
+        /* Small Product Card */
+        .product-card {
+            background: #111;
+            border: 1px solid #222;
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+        .product-card:hover {
+            transform: translateY(-4px);
+            border-color: #e31b23;
+        }
+        .product-card.selected {
+            border-color: #e31b23;
+            box-shadow: 0 0 20px rgba(227, 27, 35, 0.3);
+        }
+        .product-image {
+            height: 120px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3em;
+            overflow: hidden;
+        }
+        .product-image.passport-img {
+            height: 160px;
+        }
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .product-image.passport-img img {
+            object-fit: contain;
+            padding: 10px;
+        }
+        .product-info {
+            padding: 16px;
+        }
+        .product-info h3 {
+            font-size: 1em;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+        .product-info .stock {
+            color: #4ade80;
+            font-size: 0.8em;
+            margin-bottom: 8px;
+        }
+        .product-info .price {
+            font-size: 1.1em;
+            font-weight: 700;
+            color: #fff;
+        }
+        
+        /* Order Section */
+        .order-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px 60px;
+        }
+        
+        .order-card {
+            background: #111;
+            border: 1px solid #222;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+        .order-card h3 {
+            font-size: 1.1em;
+            font-weight: 600;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #222;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            color: #888;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 14px 18px;
+            background: #0a0a0a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 1em;
+            font-family: 'Inter', sans-serif;
+        }
+        .form-group input:focus {
+            outline: none;
+            border-color: #e31b23;
+        }
+        .form-group input::placeholder {
+            color: #555;
+        }
+        .fee-note {
+            color: #666;
+            font-size: 0.85em;
+            margin-top: 8px;
+        }
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: #e31b23;
+            border: none;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+        .submit-btn:hover {
+            background: #c41820;
+        }
+        
+        .ltc-info {
+            background: #0a0a0a;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .ltc-info span {
+            color: #888;
+        }
+        .ltc-info strong {
+            color: #4ade80;
+        }
+        
+        /* What you get section */
+        .includes-box {
+            background: #0a0a0a;
+            border: 1px solid #222;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .includes-box h4 {
+            color: #e31b23;
+            font-size: 0.9em;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .includes-list {
+            list-style: none;
+        }
+        .includes-list li {
+            padding: 8px 0;
+            color: #ccc;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid #1a1a1a;
+        }
+        .includes-list li:last-child {
+            border-bottom: none;
+        }
+        .includes-list li::before {
+            content: "✓";
+            color: #4ade80;
+            font-weight: bold;
+        }
+        
+        /* Payment Details */
+        .payment-card {
+            background: #111;
+            border: 1px solid #222;
+            border-radius: 12px;
+            padding: 24px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+        .payment-card.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .payment-card.hidden {
+            display: none;
+        }
+        .payment-card h3 {
+            font-size: 1.1em;
+            font-weight: 600;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #222;
+        }
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #1a1a1a;
+        }
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+        .detail-row .label {
+            color: #888;
+        }
+        .detail-row .value {
+            font-weight: 600;
+        }
+        .total-section {
+            background: #0a0a0a;
+            margin: 20px -24px -24px;
+            padding: 20px 24px;
+            border-radius: 0 0 12px 12px;
+        }
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+        .total-row .label {
+            color: #888;
+            font-size: 1.1em;
+        }
+        .total-row .value {
+            font-size: 1.3em;
+            font-weight: 700;
+        }
+        .ltc-amount {
+            display: flex;
+            justify-content: space-between;
+            padding: 16px;
+            background: rgba(74, 222, 128, 0.1);
+            border: 1px solid rgba(74, 222, 128, 0.3);
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .ltc-amount .label {
+            color: #4ade80;
+        }
+        .ltc-amount .value {
+            color: #4ade80;
+            font-weight: 700;
+            font-size: 1.1em;
+        }
+        .address-section label {
+            display: block;
+            color: #888;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+        .address-box {
+            background: #0a0a0a;
+            border: 1px solid #333;
+            padding: 16px;
+            border-radius: 8px;
+            font-family: 'SF Mono', Monaco, monospace;
+            font-size: 0.8em;
+            word-break: break-all;
+            color: #fff;
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px;
+            border-top: 1px solid #1a1a1a;
+            color: #555;
+            font-size: 0.9em;
+        }
+        
+        .tab-buttons {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+        .tab-btn {
+            padding: 12px 24px;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            color: #888;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95em;
+            transition: all 0.2s;
+        }
+        .tab-btn.active {
+            background: #e31b23;
+            border-color: #e31b23;
+            color: #fff;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        
+        .loading {
+            color: #888;
+        }
+        
+        /* About Section */
+        .about-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+        .about-container {
+            background: #111;
+            border: 1px solid #222;
+            border-radius: 16px;
+            padding: 40px;
+        }
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .about-card {
+            background: #0a0a0a;
+            border: 1px solid #222;
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            transition: border-color 0.2s;
+        }
+        .about-card:hover {
+            border-color: #e31b23;
+        }
+        .about-icon {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+        .about-card h3 {
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+        .about-card p {
+            color: #888;
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+        .about-info-box {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #0a0a0a;
+            border-radius: 10px;
+        }
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.1em;
+            color: #e31b23;
+            font-weight: 600;
+        }
+        .info-icon {
+            font-size: 1.3em;
+        }
+        .owner-section {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #222;
+        }
+        .owner-section p {
+            color: #888;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+        .owner-section strong {
+            color: #fff;
+        }
+        .telegram-btn {
+            display: inline-block;
+            padding: 14px 32px;
+            background: #0088cc;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+        .telegram-btn:hover {
+            background: #006699;
+        }
+        
+        @media (max-width: 900px) {
+            .about-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 600px) {
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+            .about-info-box {
+                flex-direction: column;
+                gap: 15px;
+                align-items: center;
+            }
+        }
+        
+        /* LTC Banner */
+        .ltc-banner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .ltc-banner-content {
+            background: linear-gradient(135deg, #1a1a1a 0%, #111 100%);
+            border: 1px solid #333;
+            border-radius: 12px;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            font-size: 1.2em;
+        }
+        .ltc-banner-content span {
+            color: #888;
+        }
+        .ltc-banner-content strong {
+            color: #4ade80;
+            font-size: 1.3em;
+        }
+        
+        @media (max-width: 900px) {
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .navbar {
+                padding: 15px 20px;
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+            .nav-links {
+                gap: 20px;
+            }
+            .hero h1 {
+                font-size: 2.5em;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <div class="logo-icon">CC</div>
+            <span class="logo-text">CC Heaven</span>
+        </div>
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#products">Products</a>
+            <a href="#about">About</a>
+            <a href="https://t.me/teaudp" target="_blank">Contact</a>
+        </div>
+        <div class="nav-right">
+            <button class="nav-btn">$ USD</button>
+            <button class="nav-btn red">Cart</button>
+        </div>
+    </nav>
+    
+    <section class="hero">
+        <div class="badge">🚀 Premium Digital Products</div>
+        <h1>Premium Cards,<br><span>Zero Compromise</span></h1>
+        <p>The best services with best tools to satisfy all customers!</p>
+        <div class="hero-buttons">
+            <button class="btn-primary" onclick="document.getElementById('products').scrollIntoView({behavior: 'smooth'})">Browse Products ⚡</button>
+            <button class="btn-secondary">Join Discord</button>
+        </div>
+    </section>
+    
+    <div class="ltc-banner">
+        <div class="ltc-banner-content">
+            <span>🪙 LTC Live Price:</span>
+            <strong id="ltc-banner-price">Loading...</strong>
+        </div>
+    </div>
+    
+    <section class="products" id="products">
+        <h2 class="section-title">Products</h2>
+        
+        <div class="products-grid">
+            <div class="product-card" onclick="showTab('visa')">
+                <div class="product-image">
+                    <img src="https://www.bankrate.com/2020/04/01172114/Untitled-81.jpeg?auto=webp&optimize=high&crop=16:9" alt="Visa Card">
+                </div>
+                <div class="product-info">
+                    <h3>Visa Card</h3>
+                    <div class="stock">● In Stock</div>
+                    <div class="price">$20.00</div>
+                </div>
+            </div>
+            
+            <div class="product-card" onclick="showTab('passport')">
+                <div class="product-image passport-img">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHJoTvmGxhQBaOK8k5sZ8nppByA_cupJ-dXQ&s" alt="Passport">
+                </div>
+                <div class="product-info">
+                    <h3>Valid Passport</h3>
+                    <div class="stock">● In Stock</div>
+                    <div class="price">$50.00</div>
+                </div>
+            </div>
+            
+            <div class="product-card" style="opacity: 0.5; pointer-events: none;">
+                <div class="product-image">🏦</div>
+                <div class="product-info">
+                    <h3>Bank Log</h3>
+                    <div class="stock" style="color: #888;">● Coming Soon</div>
+                    <div class="price">$50.00</div>
+                </div>
+            </div>
+            
+            <div class="product-card" style="opacity: 0.5; pointer-events: none;">
+                <div class="product-image">💰</div>
+                <div class="product-info">
+                    <h3>PayPal</h3>
+                    <div class="stock" style="color: #888;">● Coming Soon</div>
+                    <div class="price">$30.00</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="order-section">
+        <div class="tab-buttons">
+            <button class="tab-btn active" onclick="showTab('visa')">💳 Visa Card</button>
+            <button class="tab-btn" onclick="showTab('passport')">📘 Valid Passport</button>
+        </div>
+        
+        <!-- VISA CARD TAB -->
+        <div id="visa-tab" class="tab-content active">
+            <div class="order-card">
+                <h3>Order Visa Card - $20.00</h3>
+                
+                <div class="ltc-info">
+                    <span>LTC/USD</span>
+                    <strong id="ltc-price-visa" class="loading">Loading...</strong>
+                </div>
+                
+                <form id="visa-form" onsubmit="return calculatePayment(event, 'visa')">
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" name="email" placeholder="your@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Amount to load on card ($)</label>
+                        <input type="number" name="amount" id="visa-amount" step="0.01" min="0" placeholder="Enter amount..." required>
+                        <p class="fee-note">3% fee applies to loaded amount</p>
+                    </div>
+                    <button type="submit" class="submit-btn">Calculate Payment →</button>
+                </form>
+            </div>
+        </div>
+        
+        <!-- PASSPORT TAB -->
+        <div id="passport-tab" class="tab-content">
+            <div class="order-card">
+                <h3>Order Valid Passport - $50.00</h3>
+                
+                <div class="ltc-info">
+                    <span>LTC/USD</span>
+                    <strong id="ltc-price-passport" class="loading">Loading...</strong>
+                </div>
+                
+                <div class="includes-box">
+                    <h4>What You Get</h4>
+                    <ul class="includes-list">
+                        <li>First Name</li>
+                        <li>Last Name</li>
+                        <li>Phone Number</li>
+                        <li>Address</li>
+                        <li>Passport Number</li>
+                        <li>SSN Number</li>
+                    </ul>
+                </div>
+                
+                <form id="passport-form" onsubmit="return calculatePayment(event, 'passport')">
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" name="email" placeholder="your@email.com" required>
+                    </div>
+                    <button type="submit" class="submit-btn">Calculate Payment →</button>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Payment Card (Initially Hidden) -->
+        <div id="payment-card" class="payment-card hidden">
+            <h3>Payment Details</h3>
+            
+            <div id="payment-details"></div>
+            
+            <div class="total-section">
+                <div class="total-row">
+                    <span class="label">Total USD</span>
+                    <span class="value" id="total-usd">$0.00</span>
+                </div>
+                <div class="ltc-amount">
+                    <span class="label">Pay in LTC</span>
+                    <span class="value" id="ltc-amount">0.00000000 LTC</span>
+                </div>
+                <div class="address-section">
+                    <label>Send payment to:</label>
+                    <div class="address-box" id="ltc-address"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="about-section" id="about">
+        <div class="about-container">
+            <h2 class="section-title">About Us</h2>
+            
+            <div class="about-grid">
+                <div class="about-card">
+                    <div class="about-icon">🏆</div>
+                    <h3>Since 2018</h3>
+                    <p>We've been in the game for over 6 years, providing top quality services to our customers.</p>
+                </div>
+                
+                <div class="about-card">
+                    <div class="about-icon">⭐</div>
+                    <h3>500+ Vouches</h3>
+                    <p>Over 500 satisfied customers have vouched for our cards and services.</p>
+                </div>
+                
+                <div class="about-card">
+                    <div class="about-icon">🔒</div>
+                    <h3>3DS Support</h3>
+                    <p>All our cards support 3-D Secure verification for maximum compatibility.</p>
+                </div>
+                
+                <div class="about-card">
+                    <div class="about-icon">✅</div>
+                    <h3>4 Year Warranty</h3>
+                    <p>We stand behind our products with a full 4 year warranty on all items.</p>
+                </div>
+            </div>
+            
+            <div class="about-info-box">
+                <div class="info-item">
+                    <span class="info-icon">🚫</span>
+                    <span>No Government Services</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-icon">🔓</span>
+                    <span>No KYC Required</span>
+                </div>
+            </div>
+            
+            <div class="owner-section">
+                <p>Owner: <strong>Tea</strong></p>
+                <a href="https://t.me/teaudp" target="_blank" class="telegram-btn">
+                    📱 Click Here to DM Owner
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <footer class="footer">
+        © 2024 CC Heaven. All rights reserved.
+    </footer>
+    
+    <script>
+        // Configuration
+        const LTC_ADDRESS = "ltc1qrkrwz9jr875yetdvfgxwheh9nt2gnlx2uh2wdj";
+        const VISA_PRICE = 20.00;
+        const PASSPORT_PRICE = 50.00;
+        const FEE_PERCENT = 3.0;
+        let currentLtcPrice = 0;
+        
+        // Fetch LTC price from CoinGecko
+        async function fetchLtcPrice() {
+            try {
+                const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=litecoin&vs_currencies=usd');
+                const data = await response.json();
+                if (data.litecoin && data.litecoin.usd) {
+                    currentLtcPrice = data.litecoin.usd;
+                    const priceText = '$' + currentLtcPrice.toFixed(2) + ' USD';
+                    document.getElementById('ltc-banner-price').textContent = priceText;
+                    document.getElementById('ltc-price-visa').textContent = '$' + currentLtcPrice.toFixed(2);
+                    document.getElementById('ltc-price-visa').classList.remove('loading');
+                    document.getElementById('ltc-price-passport').textContent = '$' + currentLtcPrice.toFixed(2);
+                    document.getElementById('ltc-price-passport').classList.remove('loading');
+                }
+            } catch (e) {
+                document.getElementById('ltc-banner-price').textContent = 'Error loading';
+                document.getElementById('ltc-price-visa').textContent = 'Error loading';
+                document.getElementById('ltc-price-passport').textContent = 'Error loading';
+                console.log('Failed to fetch LTC price:', e);
+            }
+        }
+        
+        function showTab(tab) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            
+            // Show selected tab
+            document.getElementById(tab + '-tab').classList.add('active');
+            
+            // Update button states
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => {
+                if (btn.textContent.toLowerCase().includes(tab)) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            // Hide payment card when switching tabs
+            hidePayment();
+        }
+        
+        function hidePayment() {
+            const paymentCard = document.getElementById('payment-card');
+            paymentCard.classList.remove('show');
+            setTimeout(() => {
+                paymentCard.classList.add('hidden');
+            }, 400);
+        }
+        
+        function showPayment() {
+            const paymentCard = document.getElementById('payment-card');
+            paymentCard.classList.remove('hidden');
+            setTimeout(() => {
+                paymentCard.classList.add('show');
+            }, 10);
+        }
+        
+        function calculatePayment(event, product) {
+            event.preventDefault();
+            
+            if (currentLtcPrice <= 0) {
+                alert('LTC price not loaded yet. Please wait a moment and try again.');
+                return false;
+            }
+            
+            let basePrice, amountAdded, feeAmount, totalAmount, productName;
+            
+            if (product === 'visa') {
+                basePrice = VISA_PRICE;
+                amountAdded = parseFloat(document.getElementById('visa-amount').value) || 0;
+                feeAmount = amountAdded * (FEE_PERCENT / 100);
+                totalAmount = basePrice + amountAdded + feeAmount;
+                productName = 'Visa Card';
+            } else {
+                basePrice = PASSPORT_PRICE;
+                amountAdded = 0;
+                feeAmount = 0;
+                totalAmount = basePrice;
+                productName = 'Valid Passport';
+            }
+            
+            // Calculate LTC amount
+            const ltcAmount = totalAmount / currentLtcPrice;
+            
+            // Build payment details HTML
+            let detailsHTML = `
+                <div class="detail-row">
+                    <span class="label">Product</span>
+                    <span class="value">${productName}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">Base Price</span>
+                    <span class="value">$${basePrice.toFixed(2)}</span>
+                </div>
+            `;
+            
+            if (amountAdded > 0) {
+                detailsHTML += `
+                    <div class="detail-row">
+                        <span class="label">Amount Loaded</span>
+                        <span class="value">$${amountAdded.toFixed(2)}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Fee (${FEE_PERCENT}%)</span>
+                        <span class="value">$${feeAmount.toFixed(2)}</span>
+                    </div>
+                `;
+            }
+            
+            // Update payment card
+            document.getElementById('payment-details').innerHTML = detailsHTML;
+            document.getElementById('total-usd').textContent = '$' + totalAmount.toFixed(2);
+            document.getElementById('ltc-amount').textContent = ltcAmount.toFixed(8) + ' LTC';
+            document.getElementById('ltc-address').textContent = LTC_ADDRESS;
+            
+            // Show payment card with animation
+            showPayment();
+            
+            // Scroll to payment card
+            setTimeout(() => {
+                document.getElementById('payment-card').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 100);
+            
+            return false;
+        }
+        
+        // Initialize
+        fetchLtcPrice();
+        
+        // Update LTC price every 30 seconds
+        setInterval(fetchLtcPrice, 30000);
+    </script>
+</body>
+</html>
